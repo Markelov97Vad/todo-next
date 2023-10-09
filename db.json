@@ -1,0 +1,10 @@
+{
+  "todo": [
+    {
+      "id": 1,
+      "text": "Сделать тестовое задание для Drafter",
+      "completed": true,
+      "author": "Vadim"
+    }
+  ]
+}
