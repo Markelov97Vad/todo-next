@@ -1,9 +1,5 @@
+import { TodoType } from '@/app/types/todo.type';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
-
-type TodoType = {
-  text: string;
-  completed: boolean;
-}
 
 export const todosApi = createApi({
   reducerPath: 'api/todo',
@@ -16,7 +12,17 @@ export const todosApi = createApi({
         url: `/todo`
       })
     }),
-    deleteTodos: build.mutation<TodoType[], string>({
+    toggleStatusTodo: build.mutation<TodoType, TodoType>({
+      query: ({id, completed}) => ({
+        url: `/todo/${id}`,
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          completed: completed
+        })
+      })
+    }),
+    deleteTodo: build.mutation<TodoType[], string>({
       query: (id) => ({
         url: `/todo/${id}`,
         method: "DELETE",
@@ -27,5 +33,7 @@ export const todosApi = createApi({
 
 export const { 
   useGetTodosQuery,
-  useDeleteTodosMutation,
+  useLazyGetTodosQuery,
+  useToggleStatusTodoMutation,
+  useDeleteTodoMutation,
 } = todosApi;

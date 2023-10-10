@@ -1,30 +1,17 @@
 'use client'
 import TodoList from "@/app/components/TodoList/TodoList";
+import { useAppSelector } from "@/app/hooks/redux";
 import { useGetTodosQuery } from "@/app/store/todos/reducer";
-import { useEffect } from "react";
-
-const todoData = [
-  {
-    text: "Dapibus ac facilisis in",
-  },
-  {
-    text: "Morbi leo risus",
-  },
-];
 
 function Completed() {
-  const { data } = useGetTodosQuery('');
-
-  useEffect(() => {
-    console.log(data);
-    
-  }, [data]);
+  const { refetch } = useGetTodosQuery('');
+  const { searchData } = useAppSelector(state => state.todo);
   return (
     <>
-      {data?.map((todo, i) => {
+      {searchData?.map((todo, i) => {
         const completedTodos = todo.completed
         return (
-          completedTodos && <TodoList key={i} text={todo.text} />
+          completedTodos && <TodoList key={i} data={todo} refetch={refetch}/>
         )
       })}
     </>

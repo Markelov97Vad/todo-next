@@ -1,5 +1,6 @@
 'use client'
 import TodoList from "@/app/components/TodoList/TodoList";
+import { useAppSelector } from "@/app/hooks/redux";
 import { useGetTodosQuery } from "@/app/store/todos/reducer";
 
 const todoData = [
@@ -12,13 +13,14 @@ const todoData = [
 ]
 
 function Active() {
-  const { data } = useGetTodosQuery('');
+  const { data, refetch } = useGetTodosQuery('');
+  const { searchData } = useAppSelector(state => state.todo);
   return (
     <>
-      {data?.map((todo, i) => {
+      {searchData?.map((todo, i) => {
         const activeTodos = !todo.completed
         return (
-          activeTodos && <TodoList key={i} text={todo.text} />
+          activeTodos && <TodoList key={i} data={todo} refetch={refetch} />
         )
       })}
 

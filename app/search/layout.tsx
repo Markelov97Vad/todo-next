@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import styles from "./page.module.css";
 import Navigation from "../components/Navigation/Navigation";
+import SearchForm from "../components/SearchForm/SearchForm";
 
 const dataTab = [
   {
@@ -20,11 +21,13 @@ const dataTab = [
 export default function SearchLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <form className={styles.form}>
+      {/* <form className={styles.form}>
         <div className="form-outline flex-fill">
           <input
             type="text"
             placeholder="Search todo.."
+            value={}
+            onChange={}
             id="form2"
             className={`form-control`}
           />
@@ -35,7 +38,8 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
         >
           Search
         </button>
-      </form>
+      </form> */}
+      <SearchForm/>
       <Navigation data={dataTab} />
       <div className="tab-content" id="ex1-content">
         <div
@@ -46,7 +50,6 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
         >
           <ul className="list-group mb-0">
             {children}
-
           </ul>
         </div>
       </div>

@@ -1,29 +1,18 @@
 "use client";
 import TodoList from "@/app/components/TodoList/TodoList";
-import { Providers } from "@/app/store/provider";
+import { useAppSelector } from "@/app/hooks/redux";
 import { useGetTodosQuery } from "@/app/store/todos/reducer";
 
-const todoData = [
-  {
-    text: 'Dapibus ac facilisis in'
-  },
-  {
-    text: 'Morbi leo risus'
-  },
-]
-
 function All() {
-  const { data } = useGetTodosQuery('');
+  const { refetch } = useGetTodosQuery("");
+  const { searchData } = useAppSelector(state => state.todo);
+
   return (
     <>
-      {
-
-        data?.map((todo, i) => (
-          <TodoList key={i} text={todo.text}/> 
-        ))
-      }
+      {searchData?.map((todo, i) => (
+        <TodoList key={i} data={todo} refetch={refetch} />
+      ))}
     </>
-          
   );
 }
 
