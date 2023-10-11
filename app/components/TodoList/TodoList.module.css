@@ -1,12 +1,31 @@
 .todoList {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.todoList__wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .todoList__input {
   margin: 0 15px 0 0;
+  cursor: pointer;
 }
 
 .todoList__text {
+  text-decoration: none;
+  color: black;
   margin: 0;
+}
+
+.todoList__text:hover {
+  text-decoration: underline;
+}
+
+.todoList__button-trash {
+  border: none;
+  padding: 0;
+  background-color: inherit;
 }

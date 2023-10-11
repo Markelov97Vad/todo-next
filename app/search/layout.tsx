@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import styles from "./page.module.css";
 import Navigation from "../components/Navigation/Navigation";
-import SearchForm from "../components/SearchForm/SearchForm";
+import SearchForm from "../components/Form/SearchForm";
 
 const dataTab = [
   {
@@ -39,7 +39,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
           Search
         </button>
       </form> */}
-      <SearchForm/>
+      <SearchForm />
       <Navigation data={dataTab} />
       <div className="tab-content" id="ex1-content">
         <div
@@ -48,9 +48,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
           role="tabpanel"
           aria-labelledby="ex1-tab-1"
         >
-          <ul className="list-group mb-0">
-            {children}
-          </ul>
+          <ul className="list-group mb-0">{children}</ul>
         </div>
       </div>
     </>

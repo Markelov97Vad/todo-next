@@ -4,14 +4,15 @@ import { useAppSelector } from "@/app/hooks/redux";
 import { useGetTodosQuery } from "@/app/store/todos/reducer";
 
 function All() {
-  const { refetch } = useGetTodosQuery("");
   const { searchData } = useAppSelector(state => state.todo);
 
   return (
     <>
-      {searchData?.map((todo, i) => (
-        <TodoList key={i} data={todo} refetch={refetch} />
-      ))}
+      {searchData?.length > 0 ? searchData?.map((todo, i) => (
+        <TodoList key={i} data={todo} />
+      )) :
+      <span>To do are missing.</span>
+    }
     </>
   );
 }

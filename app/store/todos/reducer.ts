@@ -12,17 +12,45 @@ export const todosApi = createApi({
         url: `/todo`
       })
     }),
+    addTodo: build.mutation<TodoType, TodoType>({
+      query: ({text, completed, date}) => ({
+        url: `/todo`,
+        method: "POST",
+        headers: {"Content-type": "application/json"},
+        body: JSON.stringify({
+          date,
+          text,
+          completed
+        })
+      })
+    }),
+    getCurrentTodo: build.query<TodoType, string>({
+      query: (id) => ({
+        url: `/todo/${id}`,
+        headers: {"Content-type": "application/json"},
+      })
+    }),
     toggleStatusTodo: build.mutation<TodoType, TodoType>({
       query: ({id, completed}) => ({
         url: `/todo/${id}`,
         method: "PATCH",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          completed: completed
+          completed
         })
       })
     }),
-    deleteTodo: build.mutation<TodoType[], string>({
+    editTodo: build.mutation<TodoType, TodoType>({
+      query: ({id, text}) => ({
+        url: `/todo/${id}`,
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          text
+        })
+      })
+    }),
+    deleteTodo: build.mutation<TodoType[], number>({
       query: (id) => ({
         url: `/todo/${id}`,
         method: "DELETE",
@@ -34,6 +62,10 @@ export const todosApi = createApi({
 export const { 
   useGetTodosQuery,
   useLazyGetTodosQuery,
+  useAddTodoMutation,
+  useGetCurrentTodoQuery,
+  useLazyGetCurrentTodoQuery,
   useToggleStatusTodoMutation,
+  useEditTodoMutation,
   useDeleteTodoMutation,
 } = todosApi;

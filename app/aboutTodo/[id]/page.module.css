@@ -1,0 +1,45 @@
+
+.todo__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo__title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.todo__button {
+  border: none;
+  background-color: inherit;
+}
+
+.todo__button:hover {
+  opacity: .6;
+}
+
+.todo__date {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.todo__info {
+  font-weight: 400;
+}
+
+.todo__text {
+  font-weight: 400;
+  font-size: 16px;
+  margin: 20px 0 44px;
+}
+
+.todo__status {
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.todo__status_type_value {
+  font-weight: 400;
+}
