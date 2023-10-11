@@ -1,22 +1,16 @@
 {
   "todo": [
     {
-      "date": "10/11/2023, 1:09:17",
-      "text": "VVVV",
+      "date": "10/11/2023, 4:11:50",
+      "text": "new task2",
       "completed": true,
-      "id": 3
+      "id": 1
     },
     {
-      "date": "10/11/2023, 2:10:37",
-      "text": "QWQW",
-      "completed": true,
-      "id": 4
-    },
-    {
-      "date": "10/11/2023, 2:11:42",
-      "text": "xnxnxn",
-      "completed": true,
-      "id": 5
+      "date": "10/11/2023, 4:11:57",
+      "text": "Task2",
+      "completed": false,
+      "id": 2
     }
   ]
 }

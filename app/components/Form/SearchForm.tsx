@@ -1,35 +1,26 @@
 "use client";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import styles from "./SearchForm.module.css";
 import {
   useAddTodoMutation,
-  useEditTodoMutation,
   useGetTodosQuery,
 } from "@/app/store/todos/reducer";
 import { useActions } from "@/app/hooks/actions";
-import { TodoType } from "@/app/types/todo.type";
-import { usePathname } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/redux";
+import { useAppDispatch } from "@/app/hooks/redux";
 import { editTodo } from "@/app/store/todos/todoApi";
+import { TodoType, inputValueType } from "@/app/types/all.types";
 
-type inputValueType = {
-  search?: string;
-  add?: string;
-  edit?: string;
-};
-
-function Form({ id, text }: { id?: string, text?: string}) {
+function Form({ id, text }: { id?: string; text?: string }) {
   const [inputValue, setInputValue] = useState<inputValueType | null>(null);
   const { data, refetch } = useGetTodosQuery("");
-  const [addNewTodo , { isSuccess }] = useAddTodoMutation()
-  // const [editTodo, {}] = useEditTodoMutation();
+  const [addNewTodo, { isSuccess }] = useAddTodoMutation();
   const { searchTodos } = useActions();
-  // const {  } = useAppSelector(state => state.todo)
   const pathname = usePathname();
-  const dispatch = useAppDispatch()
-  const isSearchForm = pathname.includes('search')
-  const isAddForm = pathname.includes('add')
-  const isTodoForm = pathname.includes('aboutTodo')
+  const dispatch = useAppDispatch();
+  const isSearchForm = pathname.includes("search");
+  const isAddForm = pathname.includes("add");
+  const isTodoForm = pathname.includes("aboutTodo");
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
@@ -40,20 +31,23 @@ function Form({ id, text }: { id?: string, text?: string}) {
     }));
   };
 
-  const resetFormValues = useCallback((newValue: inputValueType) => {
-    setInputValue(newValue);
-  }, [setInputValue]);
+  const resetFormValues = useCallback(
+    (newValue: inputValueType) => {
+      setInputValue(newValue);
+    },
+    [setInputValue]
+  );
 
   useEffect(() => {
     if (text) {
-      resetFormValues({edit: text})
+      resetFormValues({ edit: text });
     }
-  }, [])
+  }, []);
 
   const handleSubmit = (evt: ChangeEvent<EventTarget>) => {
     evt.preventDefault();
-    if( isSearchForm) {
-      sessionStorage.setItem('keywords', inputValue?.search as string)
+    if (isSearchForm) {
+      sessionStorage.setItem("keywords", inputValue?.search as string);
       searchTodos({
         keyword: inputValue?.search as string,
         todos: data as TodoType[],
@@ -61,20 +55,20 @@ function Form({ id, text }: { id?: string, text?: string}) {
     }
     if (isAddForm) {
       addNewTodo({
-        date: `${new Date().toLocaleString().split(' ')[0]} ${new Date().toLocaleString().split(' ')[1]}`,
+        date: `${new Date().toLocaleString().split(" ")[0]} ${
+          new Date().toLocaleString().split(" ")[1]
+        }`,
         text: inputValue?.add,
-        completed: false
-      })
+        completed: false,
+      });
     }
     if (isTodoForm) {
-      dispatch(editTodo({
-        id: Number(id),
-        text: inputValue?.edit
-      }))
-      // editTodo({
-      //   id: Number(id),
-      //   text: inputValue?.edit
-      // })
+      dispatch(
+        editTodo({
+          id: Number(id),
+          text: inputValue?.edit,
+        })
+      );
     }
   };
   useEffect(() => {
@@ -82,12 +76,12 @@ function Form({ id, text }: { id?: string, text?: string}) {
     searchTodos({
       keyword: "",
       todos: data as TodoType[],
-    })
+    });
 
     if (isSuccess) {
       setInputValue((current) => ({
         ...current,
-        add: '',
+        add: "",
       }));
     }
   }, [data, isSuccess]);
@@ -95,8 +89,7 @@ function Form({ id, text }: { id?: string, text?: string}) {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className="form-outline flex-fill">
-        {
-          isSearchForm && 
+        {isSearchForm && (
           <input
             type="text"
             name="search"
@@ -105,9 +98,8 @@ function Form({ id, text }: { id?: string, text?: string}) {
             onChange={handleChange}
             className={`form-control`}
           />
-        }
-        {
-          isAddForm &&
+        )}
+        {isAddForm && (
           <input
             type="text"
             name="add"
@@ -116,9 +108,8 @@ function Form({ id, text }: { id?: string, text?: string}) {
             onChange={handleChange}
             className={`form-control`}
           />
-        }
-        {
-          isTodoForm &&
+        )}
+        {isTodoForm && (
           <input
             type="text"
             name="edit"
@@ -127,12 +118,19 @@ function Form({ id, text }: { id?: string, text?: string}) {
             onChange={handleChange}
             className={`form-control`}
           />
-        }
+        )}
       </div>
       <button
         type="submit"
-        className={`btn ${isTodoForm && 'btn-warning'} ${isSearchForm && 'btn-success'} ${isAddForm && 'btn-primary'} ${styles["form__button-submit"]}`}
-        disabled={(isAddForm || isTodoForm) && (inputValue?.add?.length === 0 || inputValue?.edit?.length === 0) ? true : false}
+        className={`btn ${isTodoForm && "btn-warning"} ${
+          isSearchForm && "btn-success"
+        } ${isAddForm && "btn-primary"} ${styles["form__button-submit"]}`}
+        disabled={
+          (isAddForm || isTodoForm) &&
+          (inputValue?.add?.length === 0 || inputValue?.edit?.length === 0)
+            ? true
+            : false
+        }
       >
         {isSearchForm && "Search"}
         {isAddForm && "Add"}

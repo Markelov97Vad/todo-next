@@ -1,34 +1,33 @@
-import { useDeleteTodoMutation, useGetTodosQuery, useToggleStatusTodoMutation } from '@/app/store/todos/reducer'
-import styles from './TodoList.module.css'
-import { useEffect} from 'react'
-import TrashIcon from '../icons/TrashIcon'
-import Link from 'next/link'
-import { useAppSelector } from '@/app/hooks/redux'
+import Link from "next/link";
+import { useEffect } from "react";
+import styles from "./TodoList.module.css";
+import {
+  useDeleteTodoMutation,
+  useGetTodosQuery,
+  useToggleStatusTodoMutation,
+} from "@/app/store/todos/reducer";
+import TrashIcon from "../icons/TrashIcon";
+import { TodoListProps } from "@/app/types/props.type";
 
-type TodoListProps = {
-  data: {
-    id?: number
-    text?: string
-    completed?: boolean
-  }
-}
-
-function TodoList({data} : TodoListProps ) {
-  const [toggleStatus, {isSuccess , isLoading}] = useToggleStatusTodoMutation();
-  const [deleteTodo,{ isSuccess: isSuccessDelete, isLoading: isLoadingDelete}] = useDeleteTodoMutation();
+function TodoList({ data }: TodoListProps) {
+  const [toggleStatus, { isSuccess, isLoading }] =
+    useToggleStatusTodoMutation();
+  const [
+    deleteTodo,
+    { isSuccess: isSuccessDelete, isLoading: isLoadingDelete },
+  ] = useDeleteTodoMutation();
   const { refetch } = useGetTodosQuery("");
-  const { searchData } = useAppSelector(state => state.todo);
 
   const handleChange = () => {
     toggleStatus({
       id: data?.id,
-      completed: !data?.completed
-    })
-  }
+      completed: !data?.completed,
+    });
+  };
 
   const handleDelete = () => {
     deleteTodo(data?.id as number);
-  }
+  };
 
   useEffect(() => {
     if (isSuccess || isSuccessDelete) {
@@ -49,12 +48,19 @@ function TodoList({data} : TodoListProps ) {
           checked={data.completed}
           onChange={handleChange}
         />
-        <Link href={`/aboutTodo/${data?.id}`} className={styles['todoList__text']}>
+        <Link
+          href={`/aboutTodo/${data?.id}`}
+          className={styles["todoList__text"]}
+        >
           {data?.text}
         </Link>
       </div>
-      <button onClick={handleDelete} type='button' className={styles['todoList__button-trash']}>
-        <TrashIcon/>
+      <button
+        onClick={handleDelete}
+        type="button"
+        className={styles["todoList__button-trash"]}
+      >
+        <TrashIcon />
       </button>
     </li>
   );

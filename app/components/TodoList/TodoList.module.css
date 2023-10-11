@@ -15,6 +15,10 @@
 }
 
 .todoList__text {
+  max-width: 700px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   text-decoration: none;
   color: black;
   margin: 0;
@@ -28,4 +32,20 @@
   border: none;
   padding: 0;
   background-color: inherit;
+}
+
+@media screen and (max-width: 992px) {
+  .todoList__text {
+    max-width: 500px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .todoList__text {
+    max-width: 200px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .todoList__text {
+    max-width: 100px;
+  }
 }
