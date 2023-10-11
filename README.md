@@ -1,11 +1,5 @@
 <h1>Тестовое задание для Drafter</h1>
 
-_____
-
-<a name="project-description"><h2>Деплой на Versel</h2></a>
-(https://)
-____
-
 <h2> Установка и запуск приложения в локальном репозитории</h2>
 
 1. `git clone https://github.com/Markelov97Vad/todo-next` - клонировать репозиторий на свое устройство
